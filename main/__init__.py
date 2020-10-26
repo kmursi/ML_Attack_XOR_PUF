@@ -26,12 +26,11 @@ def get_args():
     parser.add_argument('--stages', metavar="S", type=int,
                         default=64, help='Test size (0-1)')
     parser.add_argument('--challenges', metavar="C", type=int,
-                        default=40000, help='Number of challenges')
-    parser.add_argument('--streams', metavar="SS", type=int, default=4, help='Number of streams in XPUF')
-    parser.add_argument('--epochs', metavar="R", type=int, default=50, help='Number of epochs')
+                        default=350000, help='Number of challenges')
+    parser.add_argument('--streams', metavar="SS", type=int, default=6, help='Number of streams in XPUF')
+    parser.add_argument('--epochs', metavar="R", type=int, default=100, help='Number of epochs')
     parser.add_argument('--plot', metavar="PC", type=int, default=0, help='Plotting option')
     parser.add_argument('--plotdist', metavar="PT", nargs='?', default='loss_and_accuracy.png')
-    parser.add_argument('--filename', metavar="FN", type=str,default='../CRPs/4XOR_64bit.txt', help='CRPs file path')
     parser.add_argument('--patience', metavar="P", type=int, default=5, help='Early stopping patience')
 
     return parser.parse_args()
@@ -43,24 +42,22 @@ def get_args():
 """
 'This function read and split the CRPs of the dataset and store them in a predefined arrays'
 def reading_file(args, challenges_array, response_array):
-    print('********** Start rading file **********')
-    with open(args.filename, 'r', buffering=1) as infile:
-        i = 0
-        for line in infile:
-            sp = line.split(';')
-            temp = np.asanyarray([x for x in fe.hexToBinary(sp[0].strip())])
-            challenges_array[i] = temp
-            res1 = sp[1].strip()
-            if res1 == '0':
-                response_array[i] = np.int8(-1)
-            else:
-                response_array[i] = np.int8(1)
+    print('********** Start rading files **********')
+    file = '../CRPs/challenges_6XOR_64bit_LUT_2239B_attacking_1M.mymemmap'
+    '================================================================================================='
+    challenges_array = np.array(np.memmap(
+                file,
+                dtype='int8', mode='c',
+                shape=(args.challenges, args.stages)))
+    response_array = np.array(np.memmap(
+                '../CRPs/respnses_6XOR_64bit_LUT_2239B_attacking_1M.mymemmap',
+                dtype='int8', mode='c',
+                shape=(args.challenges)))
 
-            i = i + 1
-            if (i == args.challenges): break
-
-    print('file ', args.filename, ' read successfully !')
     print('\n')
+
+    print(challenges_array)
+    print(response_array)
 
     return challenges_array, response_array
 

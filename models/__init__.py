@@ -3,6 +3,7 @@ import numpy as np
 import tensorflow as tf
 from sklearn.base import BaseEstimator, ClassifierMixin
 from sklearn.model_selection import train_test_split
+from tensorflow import keras
 from tensorflow.keras import layers
 
 from models import TimeHistory
@@ -17,7 +18,7 @@ class XOR_PUF(BaseEstimator, ClassifierMixin):
     *                                Model initialization                               *
     *************************************************************************************
     """
-    def __init__(self, stages = 64, streams = 4, epochs=100, plot=0, fig_name='', patience = 5):
+    def __init__(self, stages = 64, streams = 6, epochs=100, plot=0, fig_name='', patience = 5):
         self.stage = stages
         self.streams = streams
         self.epochs=epochs
@@ -55,6 +56,9 @@ class XOR_PUF(BaseEstimator, ClassifierMixin):
         time_callback = TimeHistory.TimeHistory()
         # convert into 0 and 1
         y = (np.array(y) + 1) / 2.
+        print(X)
+        print(y)
+        # exit()
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=.1)
 
         '************************* setup target training accuracy **************************************************'
@@ -71,7 +75,7 @@ class XOR_PUF(BaseEstimator, ClassifierMixin):
         self.model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
 
         '************************* training **************************************************'
-        history = self.model.fit(X_train, y_train, epochs=self.epochs, batch_size=1000, callbacks=[time_callback, callbacks],
+        history = self.model.fit(X_train, y_train, epochs=self.epochs, batch_size=512, callbacks=[time_callback, callbacks],
                                  shuffle=True, validation_split=0.01)
         if self.plot == 1:
             self.plotting(history)

@@ -20,6 +20,6 @@ apply the cumulative product on the challenges
 def transform_features(C):
     # convert into 1 and -1
     C = 2. * C - 1
-    # cumulative product
-    C = np.cumprod(C, axis=1,  dtype=np.int8)
+    C = np.fliplr(C)
+    C = np.cumprod(C, axis=1,  dtype=np.float)
     return C
