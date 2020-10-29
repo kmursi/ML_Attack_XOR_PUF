@@ -3,7 +3,7 @@ The ML_Attack_XOR_PUF is a Machine Learning-based MLP model for attacking the XO
 
 The project is written using Python 3.7 using keras library with Tensor Flow backend.
 
-Before you run the current version of attacking the 9-XPUF:
+Before you run the current version of attacking the silicon 9-XPUF:
 Please unzip /CRPs/challenges_9XOR_64bit_LUT_2239B_attacking_5M.mymemmap.zip then run!
 
 Before you attack using your data:
