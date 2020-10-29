@@ -38,7 +38,8 @@ class XOR_PUF(BaseEstimator, ClassifierMixin):
         plt.plot(history.history['loss'], label="training loss", color='#4b0082', linewidth=2,
                  linestyle=(0, (5, 2, 1, 2)), dash_capstyle='round')
         plt.plot(history.history['val_loss'], label="validation loss", color='coral', linewidth=2)
-        plt.title('%1.0f-XPUF 64-bit model accuracy'%self.streams)
+        # plt.title('%1.0f-XPUF 64-bit model accuracy'%self.streams)
+        plt.title('XPUF 64-bit model accuracy')
         plt.ylabel('Accuracy/Loss')
         plt.xlabel('Epoch')
         plt.legend(['Tr. Acc.', 'Val. Acc.', 'Tr. Loss', 'Val. Loss'], loc='upper left')
@@ -75,7 +76,7 @@ class XOR_PUF(BaseEstimator, ClassifierMixin):
         self.model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
 
         '************************* training **************************************************'
-        history = self.model.fit(X_train, y_train, epochs=self.epochs, batch_size=512, callbacks=[time_callback, callbacks],
+        history = self.model.fit(X_train, y_train, epochs=self.epochs, batch_size=10000, callbacks=[time_callback, callbacks],
                                  shuffle=True, validation_split=0.01)
         if self.plot == 1:
             self.plotting(history)

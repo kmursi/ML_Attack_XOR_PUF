@@ -26,12 +26,12 @@ def get_args():
     parser.add_argument('--stages', metavar="S", type=int,
                         default=64, help='Test size (0-1)')
     parser.add_argument('--challenges', metavar="C", type=int,
-                        default=350000, help='Number of challenges')
-    parser.add_argument('--streams', metavar="SS", type=int, default=6, help='Number of streams in XPUF')
+                        default=5000000, help='Number of challenges')
+    parser.add_argument('--streams', metavar="SS", type=int, default=8, help='Number of streams in XPUF (it is used to obtain the NN structure)')
     parser.add_argument('--epochs', metavar="R", type=int, default=100, help='Number of epochs')
-    parser.add_argument('--plot', metavar="PC", type=int, default=0, help='Plotting option')
+    parser.add_argument('--plot', metavar="PC", type=int, default=1, help='Plotting option')
     parser.add_argument('--plotdist', metavar="PT", nargs='?', default='loss_and_accuracy.png')
-    parser.add_argument('--patience', metavar="P", type=int, default=5, help='Early stopping patience')
+    parser.add_argument('--patience', metavar="P", type=int, default=3, help='Early stopping patience')
 
     return parser.parse_args()
 
@@ -43,14 +43,14 @@ def get_args():
 'This function read and split the CRPs of the dataset and store them in a predefined arrays'
 def reading_file(args, challenges_array, response_array):
     print('********** Start rading files **********')
-    file = '../CRPs/challenges_6XOR_64bit_LUT_2239B_attacking_1M.mymemmap'
+    file = '../CRPs/challenges_9XOR_64bit_LUT_2239B_attacking_5M.mymemmap'
     '================================================================================================='
     challenges_array = np.array(np.memmap(
                 file,
                 dtype='int8', mode='c',
                 shape=(args.challenges, args.stages)))
     response_array = np.array(np.memmap(
-                '../CRPs/respnses_6XOR_64bit_LUT_2239B_attacking_1M.mymemmap',
+                '../CRPs/respnses_9XOR_64bit_LUT_2239B_attacking_5M.mymemmap',
                 dtype='int8', mode='c',
                 shape=(args.challenges)))
 
