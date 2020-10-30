@@ -7,6 +7,7 @@ Before you run the current version of attacking the silicon 9-XPUF:
 Please unzip /CRPs/challenges_9XOR_64bit_LUT_2239B_attacking_5M.mymemmap.zip then run!
 
 Before you attack using your data:
+
   1- choose the correct stream value:
     The stream variable in the parameter indicates the number of components in an n-XPUF. It is used in the program to create the structure of the NN 
     (2^n/2, 2^n, 2^n/2)
