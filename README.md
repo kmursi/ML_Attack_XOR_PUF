@@ -12,10 +12,14 @@ Before you attack using your data:
     (2^n/2, 2^n, 2^n/2)
     However, we suggest to choose stream = 5 if you are attacking the 2-XPUF, 3-XPUF, and 4-XPUF.
     If you are attacking the 9-XPUF, the stream should equal eight since (2^9) neurons will lead to overfitting.
+    
   2- Make sure you obtain the correct order of the stages:
     The challenge bits should be reversed before applying the cumulative product. Please see the line to 23 in /features/__init__.py/
     If your challenges are already in reverse order, please delete line 23 in /features/__init__.py/. (You may try both orders for verification).
+    
   3- Make sure that your challenges are randomly selected and uniformly distributed. 
+  
+  4- The responses must be in (0 and 1) and not anything else before the training process. If your responses are in (0 and 1), comment line 59 in /models/__init__.py /
     
     
 
